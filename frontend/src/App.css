@@ -26,3 +26,156 @@
 .trip-card:hover {
   transform: scale(1.05);
 }
+
+.trip-form {
+  margin-bottom: 30px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.trip-form input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Styling for the horizontal flow */
+.timeline-container {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 40px;
+  gap: 10px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+}
+
+.trip-node {
+  background: #2a2a2a;
+  border: 2px solid #646cff;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 200px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.duration-badge {
+  position: absolute;
+  top: -15px;
+  right: 10px;
+  background: #646cff;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: #646cff;
+  margin: 0 15px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(5px); }
+  100% { opacity: 0.5; transform: translateX(0); }
+}
+
+/* Styling for budget and dates */
+.budget-summary {
+  background: #646cff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.price-tag {
+  bottom: 10px;
+  right: 15px;
+  color: #4ade80; /* Nice green for money */
+  font-weight: bold;
+}
+
+.date-range {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-arrow {
+  margin: 0 5px;
+  color: #646cff;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 5px;
+}
+
+/* Styling for Inline Edit inputs */
+.trip-node.editing input {
+  width: 100%;
+  margin-bottom: 8px;
+  background: #333;
+  color: white;
+  border: 1px solid #646cff;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.card-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+/* English comments: Styling for the nested flow list */
+.plan-items-section {
+  border-top: 1px solid #444;
+  margin-top: 15px;
+  padding-top: 10px;
+  text-align: left;
+}
+
+.plan-item {
+  list-style: none;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+  display: flex;
+  gap: 10px;
+}
+
+.item-time {
+  color: #646cff;
+  font-weight: bold;
+}
+
+.mini-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
