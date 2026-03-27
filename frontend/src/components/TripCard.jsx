@@ -9,7 +9,8 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
   const [newEvent, setNewEvent] = useState({
     activityName: '',
     itemTime: '',
-    type: 'ACTIVITY' 
+    type: 'ACTIVITY',
+    itemPrice: 0,
   });
 
   /* Helper function to calculate days between two dates.
@@ -34,7 +35,7 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
   const handleEventSubmit = (e) => {
     e.preventDefault();
     onAddEvent(trip.id, newEvent);
-    setNewEvent({ activityName: '', itemTime: '', type: 'ACTIVITY' });
+    setNewEvent({ activityName: '', itemTime: '', type: 'ACTIVITY', itemPrice: 0 });
     setShowAddEvent(false);
   };
 

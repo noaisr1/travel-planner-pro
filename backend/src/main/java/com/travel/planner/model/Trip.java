@@ -88,7 +88,14 @@ public class Trip {
         this.price = price;
     }
 
-    
+    public List<PlanItem> getPlanItems() {
+        return planItems;
+    }
+
+    public void setPlanItems(List<PlanItem> planItems) {
+        this.planItems = planItems;
+    }
+
     // Helper method to add items safely
     public void addPlanItem(PlanItem item) {
         planItems.add(item);

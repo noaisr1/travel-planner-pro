@@ -25,8 +25,12 @@ public class PlanItem {
     public Long getId() { return id; }
     public String getActivityName() { return activityName; }
     public void setActivityName(String name) { this.activityName = name; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
     public String getItemTime() { return itemTime; }
     public void setItemTime(String time) { this.itemTime = time; }
+    public double getItemPrice() { return itemPrice; }
+    public void setItemPrice(double itemPrice) { this.itemPrice = itemPrice; }
     public Trip getTrip() { return trip; }
     public void setTrip(Trip trip) { this.trip = trip; }
 }

@@ -1,64 +1,86 @@
 package com.travel.planner.controller;
 
+import com.travel.planner.dto.PlanItemCreateRequest;
+import com.travel.planner.dto.PlanItemResponse;
+import com.travel.planner.dto.TripCreateRequest;
+import com.travel.planner.dto.TripResponse;
+import com.travel.planner.dto.TripUpdateRequest;
 import com.travel.planner.model.PlanItem;
 import com.travel.planner.model.Trip;
-import com.travel.planner.repository.TripRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.travel.planner.service.TripService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/trips")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TripController {
 
-    @Autowired
-    private TripRepository tripRepository; // Inject the repository to talk to the DB
+    private final TripService tripService;
+
+    public TripController(TripService tripService) {
+        this.tripService = tripService;
+    }
 
     // GET all trips from the database
     @GetMapping
-    public List<Trip> getAllTrips() {
-        return tripRepository.findAll();
+    public List<TripResponse> getAllTrips() {
+        return tripService.getAllTrips().stream().map(this::toTripResponse).toList();
     }
 
     // POST a new trip to the database
     @PostMapping
-    public Trip addTrip(@RequestBody Trip newTrip) {
-        // This saves the trip and returns the saved object (including the generated ID)
-        return tripRepository.save(newTrip);
+    public TripResponse addTrip(@Valid @RequestBody TripCreateRequest req) {
+        Trip created = tripService.createTrip(new Trip(
+                req.title(),
+                req.destination(),
+                req.startDate(),
+                req.endDate(),
+                req.price()
+        ));
+        return toTripResponse(created);
     }
 
     // New: Delete a trip by ID
     @DeleteMapping("/{id}")
-    public void deleteTrip(@PathVariable Long id) {
-        tripRepository.deleteById(id);
+    public void deleteTrip(@PathVariable long id) {
+        tripService.deleteTrip(id);
     }
 
     // New: Update an existing trip
     @PutMapping("/{id}")
-    public Trip updateTrip(@PathVariable Long id, @RequestBody Trip updatedTrip) {
-        return tripRepository.findById(id)
-                .map(trip -> {
-                    trip.setTitle(updatedTrip.getTitle());
-                    trip.setDestination(updatedTrip.getDestination());
-                    trip.setStartDate(updatedTrip.getStartDate());
-                    trip.setEndDate(updatedTrip.getEndDate());
-                    trip.setPrice(updatedTrip.getPrice());
-                    return tripRepository.save(trip);
-                })
-                .orElseGet(() -> {
-                    updatedTrip.setId(id);
-                    return tripRepository.save(updatedTrip);
-                });
+    public TripResponse updateTrip(@PathVariable long id, @Valid @RequestBody TripUpdateRequest req) {
+        Trip updated = new Trip(req.title(), req.destination(), req.startDate(), req.endDate(), req.price());
+        Trip saved = tripService.updateTrip(id, updated);
+        return toTripResponse(saved);
     }
 
-    /* Add this to your TripController.java */
     @PostMapping("/{id}/events")
-    public Trip addEventToTrip(@PathVariable Long id, @RequestBody PlanItem newItem) {
-        return tripRepository.findById(id).map(trip -> {
-            trip.addPlanItem(newItem); // Using the helper method we defined in Trip.java
-            return tripRepository.save(trip);
-        }).orElseThrow(() -> new RuntimeException("Trip not found"));
+    public TripResponse addEventToTrip(@PathVariable long id, @Valid @RequestBody PlanItemCreateRequest req) {
+        PlanItem newItem = new PlanItem();
+        newItem.setActivityName(req.activityName());
+        newItem.setType(req.type());
+        newItem.setItemTime(req.itemTime());
+        newItem.setItemPrice(req.itemPrice());
+
+        Trip saved = tripService.addEventToTrip(id, newItem);
+        return toTripResponse(saved);
+    }
+
+    private TripResponse toTripResponse(Trip trip) {
+        List<PlanItemResponse> items = trip.getPlanItems()
+                .stream()
+                .map(i -> new PlanItemResponse(i.getId(), i.getActivityName(), i.getType(), i.getItemTime(), i.getItemPrice()))
+                .toList();
+        return new TripResponse(
+                trip.getId(),
+                trip.getTitle(),
+                trip.getDestination(),
+                trip.getStartDate(),
+                trip.getEndDate(),
+                trip.getPrice(),
+                items
+        );
     }
 }
