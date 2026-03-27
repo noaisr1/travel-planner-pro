@@ -48,6 +48,7 @@ function DateRangePickerField({ label, value, onChange, disabled = false }) {
       {open && !disabled && (
         <div className="tripWizardDatePopover">
           <DayPicker
+            className="tripDatePicker"
             mode="range"
             selected={selected}
             onSelect={(range) => {

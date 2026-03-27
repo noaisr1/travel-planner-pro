@@ -1,7 +1,7 @@
 function Header({ totalBudget }) {
   return (
     <header>
-      <h1>Vacation Flow Planner</h1>
+      <div className="header-title">Vacation Flow Planner</div>
       <div className="budget-summary">
         Total Budget: <span>${totalBudget.toLocaleString()}</span>
       </div>
