@@ -1,0 +1,234 @@
+.tripFab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 2px solid #646cff;
+  background: #1a1a1a;
+  color: white;
+  font-size: 32px;
+  line-height: 0;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  z-index: 50;
+}
+
+.tripFab:hover {
+  transform: translateY(-1px);
+}
+
+.tripModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
+  z-index: 60;
+}
+
+.tripModalContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(80vh, 760px);
+  overflow: auto;
+  background: #1a1a1a;
+  border: 1px solid #646cff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+  z-index: 70;
+  text-align: left;
+}
+
+.tripModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tripModalTitle {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.tripModalCloseBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #242424;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.tripModalCloseBtn:hover {
+  border-color: #646cff;
+}
+
+.tripWizard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tripWizardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tripWizardProgress {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tripWizardDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #3a3a3a;
+  border: 1px solid #555;
+}
+
+.tripWizardDot--active {
+  background: #646cff;
+  border-color: #646cff;
+}
+
+.tripWizardProgressText {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.tripWizardStep {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tripWizardLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.tripWizardInput {
+  padding: 10px 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #242424;
+  color: white;
+}
+
+.tripWizardInput:disabled {
+  opacity: 0.6;
+}
+
+.tripWizardHint {
+  color: #fbbf24;
+  font-size: 0.9rem;
+}
+
+.tripWizardSpacer {
+  height: 2px;
+}
+
+.tripWizardActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.tripWizardActionsRight {
+  display: flex;
+  gap: 10px;
+}
+
+.tripWizardBtn {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 0.65em 1.1em;
+  font-weight: 600;
+  background: #646cff;
+  color: white;
+}
+
+.tripWizardBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tripWizardBtn--ghost {
+  background: transparent;
+  border-color: #444;
+  color: white;
+}
+
+.tripWizardField {
+  position: relative;
+}
+
+.tripWizardDateBtn {
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #242424;
+  color: white;
+}
+
+.tripWizardDatePopover {
+  margin-top: 10px;
+  border: 1px solid #444;
+  border-radius: 12px;
+  background: #121212;
+  padding: 10px;
+}
+
+.tripWizardDatePopoverActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tripWizardReview {
+  border: 1px solid #333;
+  border-radius: 12px;
+  background: #121212;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tripWizardReviewRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tripWizardReviewKey {
+  color: #aaa;
+  font-weight: 600;
+}
+
+.tripWizardReviewVal {
+  color: white;
+  font-weight: 600;
+}
+

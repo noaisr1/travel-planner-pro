@@ -27,19 +27,6 @@
   transform: scale(1.05);
 }
 
-.trip-form {
-  margin-bottom: 30px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.trip-form input {
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
 /* Styling for the horizontal flow */
 .timeline-container {
   display: flex;

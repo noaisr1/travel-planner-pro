@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import Header from './components/Header';
-import TripForm from './components/TripForm';
 import TripCard from './components/TripCard';
+import TripCreateFab from './components/TripCreateFab';
 import { useTrips } from './hooks/useTrips';
 import './App.css';
 
@@ -47,7 +47,7 @@ function App() {
   return (
     <div className="App">
       <Header totalBudget={totalBudget} />
-      <TripForm onAddTrip={handleAddTrip} />
+      <TripCreateFab onAddTrip={handleAddTrip} />
 
       <div className="timeline-container">
         {sortedTrips.map((trip, index) => (
