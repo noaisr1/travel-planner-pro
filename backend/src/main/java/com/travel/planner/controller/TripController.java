@@ -61,17 +61,37 @@ public class TripController {
         PlanItem newItem = new PlanItem();
         newItem.setActivityName(req.activityName());
         newItem.setType(req.type());
-        newItem.setItemTime(req.itemTime());
+        newItem.setItemTime(normalizeItemTime(req.itemTime()));
         newItem.setItemPrice(req.itemPrice());
 
         Trip saved = tripService.addEventToTrip(id, newItem);
         return toTripResponse(saved);
     }
 
+    private String normalizeItemTime(String itemTime) {
+        if (itemTime == null) return "";
+        String trimmed = itemTime.trim();
+        if (trimmed.matches("^\\d{1,2}:\\d{2}$")) {
+            String[] parts = trimmed.split(":");
+            int h = Integer.parseInt(parts[0]);
+            int m = Integer.parseInt(parts[1]);
+            String hh = String.format("%02d", h);
+            String mm = String.format("%02d", m);
+            return "1970-01-01T" + hh + ":" + mm + ":00";
+        }
+        return trimmed;
+    }
+
     private TripResponse toTripResponse(Trip trip) {
         List<PlanItemResponse> items = trip.getPlanItems()
                 .stream()
-                .map(i -> new PlanItemResponse(i.getId(), i.getActivityName(), i.getType(), i.getItemTime(), i.getItemPrice()))
+                .map(i -> new PlanItemResponse(
+                        i.getId(),
+                        i.getActivityName(),
+                        i.getType(),
+                        normalizeItemTime(i.getItemTime()),
+                        i.getItemPrice()
+                ))
                 .toList();
         return new TripResponse(
                 trip.getId(),

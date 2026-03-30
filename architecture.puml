@@ -1,0 +1,75 @@
+@startuml
+title travel-planner-pro (React + Spring Boot)
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor User
+
+package "Frontend (Vite + React)" as FE {
+  [main.jsx\n(QueryClientProvider)] as FE_main
+  [App.jsx] as FE_app
+
+  component "useTrips()\n(@tanstack/react-query)" as FE_useTrips
+  component "tripsApi.js\n(list/create/update/delete/addEvent)" as FE_tripsApi
+  component "client.js\napiFetch()\nVITE_API_BASE_URL\n(default http://localhost:8080)" as FE_client
+
+  package "UI Components" as FE_ui {
+    [Header] as FE_Header
+    [TripCreateFab] as FE_Fab
+    [TripCreateModal\n(Radix Dialog)] as FE_Modal
+    [TripWizard] as FE_Wizard
+    [DateRangePickerField\n(react-day-picker)] as FE_Date
+    [TripCard] as FE_Card
+  }
+
+  FE_main --> FE_app
+  FE_app --> FE_Header
+  FE_app --> FE_Fab
+  FE_app --> FE_Card
+  FE_Fab --> FE_Modal
+  FE_Modal --> FE_Wizard
+  FE_Wizard --> FE_Date
+
+  FE_app --> FE_useTrips
+  FE_useTrips --> FE_tripsApi
+  FE_tripsApi --> FE_client
+}
+
+package "Backend (Spring Boot 4 + JPA/H2)" as BE {
+  [PlannerApplication] as BE_app
+
+  component "WebCorsConfig\n(app.cors.allowed-origins\n default http://localhost:5173)" as BE_cors
+  component "GlobalExceptionHandler\n(400 validation, 404 trip not found, 500)" as BE_ex
+
+  component "TripController\n@RestController\n/api/trips" as BE_controller
+  component "TripService" as BE_service
+  component "TripRepository\nJpaRepository<Trip, Long>" as BE_repo
+
+  database "H2 (runtime)\nJPA tables" as DB
+
+  class Trip as BE_Trip <<Entity>>
+  class PlanItem as BE_PlanItem <<Entity>>
+
+  BE_controller --> BE_service
+  BE_service --> BE_repo
+  BE_repo --> DB
+
+  BE_Trip "1" o-- "0..*" BE_PlanItem : planItems (cascade=ALL, orphanRemoval=true)
+  BE_PlanItem "*" --> "1" BE_Trip : trip (JsonIgnore)
+}
+
+User --> FE_ui
+
+FE_client --> BE_controller : HTTP JSON
+
+note right of BE_controller
+Endpoints:
+GET    /api/trips
+POST   /api/trips
+PUT    /api/trips/{id}
+DELETE /api/trips/{id}
+POST   /api/trips/{id}/events
+end note
+
+@enduml

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import styles from './TripCard.module.css';
 
 function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
@@ -9,7 +9,7 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
   // Local state for the new plan item form
   const [newEvent, setNewEvent] = useState({
     activityName: '',
-    itemTime: '',
+    itemTime: new Date().toTimeString().slice(0, 5),
     type: 'ACTIVITY',
     itemPrice: 0,
   });
@@ -44,6 +44,23 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
+
+  const formatItemTime = (itemTime) => {
+    if (typeof itemTime !== 'string' || itemTime.trim() === '') return '';
+    const trimmed = itemTime.trim();
+    if (/^\d{1,2}:\d{2}$/.test(trimmed)) return trimmed;
+
+    const d = new Date(trimmed);
+    if (Number.isNaN(d.getTime())) return trimmed;
+
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${hh}:${mm}`;
+  };
+
+  const sortedPlanItems = useMemo(() => {
+    return [...trip.planItems].sort((a, b) => new Date(a.itemTime) - new Date(b.itemTime));
+  }, [trip.planItems]);
 
   if (isEditing) {
     return (
@@ -112,9 +129,9 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
         )}
 
         <ul>
-          {trip.planItems && trip.planItems.map(item => (
+          {sortedPlanItems && sortedPlanItems.map(item => (
             <li key={item.id} className={styles.planItem}>
-              <span className={styles.itemTime}>{item.itemTime}</span>
+              <span className={styles.itemTime}>{formatItemTime(item.itemTime)}</span>
               <span>{item.activityName}</span>
             </li>
           ))}
