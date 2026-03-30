@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './TripCard.module.css';
 
 function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -46,13 +47,24 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
 
   if (isEditing) {
     return (
-      <div className="trip-node editing">
-        <input name="title" value={tempData.title} onChange={handleChange} />
-        <input name="destination" value={tempData.destination} onChange={handleChange} />
-        <input name="price" type="number" value={tempData.price} onChange={handleChange} />
-        <input name="startDate" type="date" value={tempData.startDate} onChange={handleChange} />
-        <input name="endDate" type="date" value={tempData.endDate} onChange={handleChange} />
-        <div className="edit-actions">
+      <div className={`${styles.tripNode} ${styles.editing}`}>
+        <input className={styles.tripNodeEditingInput} name="title" value={tempData.title} onChange={handleChange} />
+        <input
+          className={styles.tripNodeEditingInput}
+          name="destination"
+          value={tempData.destination}
+          onChange={handleChange}
+        />
+        <input className={styles.tripNodeEditingInput} name="price" type="number" value={tempData.price} onChange={handleChange} />
+        <input
+          className={styles.tripNodeEditingInput}
+          name="startDate"
+          type="date"
+          value={tempData.startDate}
+          onChange={handleChange}
+        />
+        <input className={styles.tripNodeEditingInput} name="endDate" type="date" value={tempData.endDate} onChange={handleChange} />
+        <div className={styles.editActions}>
           <button onClick={handleSave}>Save</button>
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         </div>
@@ -61,28 +73,28 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
   }
 
   return (
-    <div className="trip-node">
-      <div className="card-actions">
-        <button className="edit-icon-btn" onClick={() => setIsEditing(true)}>✎</button>
-        <button className="delete-btn" onClick={() => onDelete(trip.id)}>×</button>
+    <div className={styles.tripNode}>
+      <div className={styles.cardActions}>
+        <button onClick={() => setIsEditing(true)}>✎</button>
+        <button onClick={() => onDelete(trip.id)}>×</button>
       </div>
 
       {/* Usage of calculateDuration */}
-      <div className="duration-badge">{calculateDuration(trip.startDate, trip.endDate)} Days</div>
+      <div className={styles.durationBadge}>{calculateDuration(trip.startDate, trip.endDate)} Days</div>
       
       <h3>{trip.title}</h3>
       <p>📍 {trip.destination}</p>
       
-      <div className="plan-items-section">
-        <div className="plan-items-header">
+      <div className={styles.planItemsSection}>
+        <div>
           <h4>Daily Flow</h4>
-          <button className="mini-add-btn" onClick={() => setShowAddEvent(!showAddEvent)}>
+          <button onClick={() => setShowAddEvent(!showAddEvent)}>
             {showAddEvent ? '-' : '+'}
           </button>
         </div>
 
         {showAddEvent && (
-          <form className="mini-event-form" onSubmit={handleEventSubmit}>
+          <form className={styles.miniEventForm} onSubmit={handleEventSubmit}>
             <input 
               placeholder="Activity (e.g. Flight)" 
               value={newEvent.activityName}
@@ -99,18 +111,18 @@ function TripCard({ trip, onDelete, onUpdate, onAddEvent }) {
           </form>
         )}
 
-        <ul className="plan-items-list">
+        <ul>
           {trip.planItems && trip.planItems.map(item => (
-            <li key={item.id} className="plan-item">
-              <span className="item-time">{item.itemTime}</span>
-              <span className="item-name">{item.activityName}</span>
+            <li key={item.id} className={styles.planItem}>
+              <span className={styles.itemTime}>{item.itemTime}</span>
+              <span>{item.activityName}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="price-tag">${trip.price}</div>
-      <div className="date-range">
+      <div className={styles.priceTag}>${trip.price}</div>
+      <div className={styles.dateRange}>
         <span>{formatDate(trip.startDate)}</span>
         <span>→</span>
         <span>{formatDate(trip.endDate)}</span>

@@ -1,0 +1,43 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.timelineContainer {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 40px;
+  gap: 10px;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: center;
+}
+
+.flowArrow {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin: 0 15px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+}
+

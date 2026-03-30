@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
-import './TripCreate.css';
+import styles from './TripCreate.module.css';
 
 function pad2(n) {
   return String(n).padStart(2, '0');
@@ -31,12 +31,12 @@ function DateRangePickerField({ label, value, onChange, disabled = false }) {
         : '';
 
   return (
-    <div className="tripWizardField">
-      <label className="tripWizardLabel">
+    <div className={styles.tripWizardField}>
+      <label className={styles.tripWizardLabel}>
         {label}
         <button
           type="button"
-          className="tripWizardDateBtn"
+          className={styles.tripWizardDateBtn}
           onClick={() => !disabled && setOpen((v) => !v)}
           disabled={disabled}
           aria-expanded={open}
@@ -46,9 +46,9 @@ function DateRangePickerField({ label, value, onChange, disabled = false }) {
       </label>
 
       {open && !disabled && (
-        <div className="tripWizardDatePopover">
+        <div className={styles.tripWizardDatePopover}>
           <DayPicker
-            className="tripDatePicker"
+            className={styles.tripDatePicker}
             mode="range"
             selected={selected}
             onSelect={(range) => {
@@ -60,17 +60,17 @@ function DateRangePickerField({ label, value, onChange, disabled = false }) {
             fixedWeeks
           />
 
-          <div className="tripWizardDatePopoverActions">
+          <div className={styles.tripWizardDatePopoverActions}>
             <button
               type="button"
-              className="tripWizardBtn tripWizardBtn--ghost"
+              className={`${styles.tripWizardBtn} ${styles['tripWizardBtn--ghost']}`}
               onClick={() => {
                 onChange({ startDate: '', endDate: '' });
               }}
             >
               Clear
             </button>
-            <button type="button" className="tripWizardBtn" onClick={() => setOpen(false)}>
+            <button type="button" className={styles.tripWizardBtn} onClick={() => setOpen(false)}>
               Done
             </button>
           </div>

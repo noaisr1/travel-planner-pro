@@ -3,7 +3,7 @@ import Header from './components/Header';
 import TripCard from './components/TripCard';
 import TripCreateFab from './components/TripCreateFab';
 import { useTrips } from './hooks/useTrips';
-import './App.css';
+import styles from './App.module.css';
 
 function App() {
   const { tripsQuery, createTripMutation, updateTripMutation, deleteTripMutation, addEventMutation } = useTrips();
@@ -45,15 +45,15 @@ function App() {
   const totalBudget = sortedTrips.reduce((sum, trip) => sum + (trip.price || 0), 0);
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <Header totalBudget={totalBudget} />
       <TripCreateFab onAddTrip={handleAddTrip} />
 
-      <div className="timeline-container">
+      <div className={styles.timelineContainer}>
         {sortedTrips.map((trip, index) => (
-          <div key={trip.id} className="timeline-item">
+          <div key={trip.id} className={styles.timelineItem}>
             <TripCard trip={trip} onDelete={handleDeleteTrip} onUpdate={handleUpdateTrip} onAddEvent={handleAddEvent} />
-            {index < sortedTrips.length - 1 && <div className="flow-arrow">➔</div>}
+            {index < sortedTrips.length - 1 && <div className={styles.flowArrow}>➔</div>}
           </div>
         ))}
       </div>

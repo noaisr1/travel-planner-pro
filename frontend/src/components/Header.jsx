@@ -1,8 +1,10 @@
+import styles from './Header.module.css';
+
 function Header({ totalBudget }) {
   return (
-    <header>
-      <div className="header-title">Vacation Flow Planner</div>
-      <div className="budget-summary">
+    <header className={styles.header}>
+      <div className={styles.title}>Vacation Flow Planner</div>
+      <div className={styles.budgetSummary}>
         Total Budget: <span>${totalBudget.toLocaleString()}</span>
       </div>
     </header>

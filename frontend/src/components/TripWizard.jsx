@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import DateRangePickerField from './DateRangePickerField';
-import './TripCreate.css';
+import styles from './TripCreate.module.css';
 
 const STEPS = {
   basics: 1,
@@ -80,22 +80,22 @@ function TripWizard({ onSubmit, onCancel }) {
   const showTitleField = priceNumber !== null && priceNumber >= 0;
 
   return (
-    <form className="tripWizard" onSubmit={handleConfirm}>
-      <div className="tripWizardTop">
-        <div className="tripWizardProgress" aria-label={progressLabel}>
-          <div className={step >= 1 ? 'tripWizardDot tripWizardDot--active' : 'tripWizardDot'} />
-          <div className={step >= 2 ? 'tripWizardDot tripWizardDot--active' : 'tripWizardDot'} />
-          <div className={step >= 3 ? 'tripWizardDot tripWizardDot--active' : 'tripWizardDot'} />
+    <form className={styles.tripWizard} onSubmit={handleConfirm}>
+      <div className={styles.tripWizardTop}>
+        <div className={styles.tripWizardProgress} aria-label={progressLabel}>
+          <div className={step >= 1 ? `${styles.tripWizardDot} ${styles['tripWizardDot--active']}` : styles.tripWizardDot} />
+          <div className={step >= 2 ? `${styles.tripWizardDot} ${styles['tripWizardDot--active']}` : styles.tripWizardDot} />
+          <div className={step >= 3 ? `${styles.tripWizardDot} ${styles['tripWizardDot--active']}` : styles.tripWizardDot} />
         </div>
-        <div className="tripWizardProgressText">{progressLabel}</div>
+        <div className={styles.tripWizardProgressText}>{progressLabel}</div>
       </div>
 
       {step === STEPS.basics && (
-        <div className="tripWizardStep" aria-label="Basics">
-          <label className="tripWizardLabel">
+        <div className={styles.tripWizardStep} aria-label="Basics">
+          <label className={styles.tripWizardLabel}>
             Destination
             <input
-              className="tripWizardInput"
+              className={styles.tripWizardInput}
               name="destination"
               placeholder="Where are you going?"
               value={values.destination}
@@ -105,7 +105,7 @@ function TripWizard({ onSubmit, onCancel }) {
             />
           </label>
 
-          <div className="tripWizardSpacer" />
+          <div className={styles.tripWizardSpacer} />
 
           <DateRangePickerField
             label="Date range"
@@ -115,7 +115,7 @@ function TripWizard({ onSubmit, onCancel }) {
           />
 
           {!step1Valid && isNonEmptyString(values.startDate) && isNonEmptyString(values.endDate) && (
-            <div className="tripWizardHint" role="alert">
+            <div className={styles.tripWizardHint} role="alert">
               End date cannot be before start date.
             </div>
           )}
@@ -123,17 +123,17 @@ function TripWizard({ onSubmit, onCancel }) {
       )}
 
       {step === STEPS.budgetAndTitle && (
-        <div className="tripWizardStep" aria-label="Budget and title">
+        <div className={styles.tripWizardStep} aria-label="Budget and title">
           {!step1Valid && (
-            <div className="tripWizardHint" role="alert">
+            <div className={styles.tripWizardHint} role="alert">
               Complete Step 1 to continue.
             </div>
           )}
 
-          <label className="tripWizardLabel">
+          <label className={styles.tripWizardLabel}>
             Budget / price (USD)
             <input
-              className="tripWizardInput"
+              className={styles.tripWizardInput}
               name="price"
               type="number"
               min="0"
@@ -148,10 +148,10 @@ function TripWizard({ onSubmit, onCancel }) {
           </label>
 
           {showTitleField && (
-            <label className="tripWizardLabel">
+            <label className={styles.tripWizardLabel}>
               Trip title
               <input
-                className="tripWizardInput"
+                className={styles.tripWizardInput}
                 name="title"
                 placeholder="e.g. Summer in Lisbon"
                 value={values.title}
@@ -162,7 +162,7 @@ function TripWizard({ onSubmit, onCancel }) {
           )}
 
           {priceNumber !== null && priceNumber < 0 && (
-            <div className="tripWizardHint" role="alert">
+            <div className={styles.tripWizardHint} role="alert">
               Price must be 0 or greater.
             </div>
           )}
@@ -170,46 +170,54 @@ function TripWizard({ onSubmit, onCancel }) {
       )}
 
       {step === STEPS.confirm && (
-        <div className="tripWizardStep" aria-label="Confirmation">
-          <div className="tripWizardReview">
-            <div className="tripWizardReviewRow">
-              <span className="tripWizardReviewKey">Destination</span>
-              <span className="tripWizardReviewVal">{values.destination || '—'}</span>
+        <div className={styles.tripWizardStep} aria-label="Confirmation">
+          <div className={styles.tripWizardReview}>
+            <div className={styles.tripWizardReviewRow}>
+              <span className={styles.tripWizardReviewKey}>Destination</span>
+              <span className={styles.tripWizardReviewVal}>{values.destination || '—'}</span>
             </div>
-            <div className="tripWizardReviewRow">
-              <span className="tripWizardReviewKey">Dates</span>
-              <span className="tripWizardReviewVal">
+            <div className={styles.tripWizardReviewRow}>
+              <span className={styles.tripWizardReviewKey}>Dates</span>
+              <span className={styles.tripWizardReviewVal}>
                 {values.startDate && values.endDate ? `${values.startDate} → ${values.endDate}` : '—'}
               </span>
             </div>
-            <div className="tripWizardReviewRow">
-              <span className="tripWizardReviewKey">Price</span>
-              <span className="tripWizardReviewVal">
+            <div className={styles.tripWizardReviewRow}>
+              <span className={styles.tripWizardReviewKey}>Price</span>
+              <span className={styles.tripWizardReviewVal}>
                 {priceNumber !== null ? `$${priceNumber.toLocaleString()}` : '—'}
               </span>
             </div>
-            <div className="tripWizardReviewRow">
-              <span className="tripWizardReviewKey">Title</span>
-              <span className="tripWizardReviewVal">{values.title || '—'}</span>
+            <div className={styles.tripWizardReviewRow}>
+              <span className={styles.tripWizardReviewKey}>Title</span>
+              <span className={styles.tripWizardReviewVal}>{values.title || '—'}</span>
             </div>
           </div>
 
           {(!step1Valid || !step2Valid) && (
-            <div className="tripWizardHint" role="alert">
+            <div className={styles.tripWizardHint} role="alert">
               Some details are missing or invalid. Go back to fix them.
             </div>
           )}
         </div>
       )}
 
-      <div className="tripWizardActions">
-        <button type="button" onClick={onCancel} className="tripWizardBtn tripWizardBtn--ghost">
+      <div className={styles.tripWizardActions}>
+        <button
+          type="button"
+          onClick={onCancel}
+          className={`${styles.tripWizardBtn} ${styles['tripWizardBtn--ghost']}`}
+        >
           Cancel
         </button>
 
-        <div className="tripWizardActionsRight">
+        <div className={styles.tripWizardActionsRight}>
           {step > STEPS.basics && (
-            <button type="button" onClick={handleBack} className="tripWizardBtn tripWizardBtn--ghost">
+            <button
+              type="button"
+              onClick={handleBack}
+              className={`${styles.tripWizardBtn} ${styles['tripWizardBtn--ghost']}`}
+            >
               Back
             </button>
           )}
@@ -218,7 +226,7 @@ function TripWizard({ onSubmit, onCancel }) {
             <button
               type="button"
               onClick={handleNext}
-              className="tripWizardBtn"
+              className={styles.tripWizardBtn}
               disabled={!canGoNext || (step === STEPS.budgetAndTitle && !step1Valid)}
             >
               Next
@@ -226,7 +234,7 @@ function TripWizard({ onSubmit, onCancel }) {
           )}
 
           {step === STEPS.confirm && (
-            <button type="submit" className="tripWizardBtn" disabled={!step1Valid || !step2Valid}>
+            <button type="submit" className={styles.tripWizardBtn} disabled={!step1Valid || !step2Valid}>
               Create trip
             </button>
           )}

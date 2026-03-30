@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TripCreateModal from './TripCreateModal';
 import TripWizard from './TripWizard';
-import './TripCreate.css';
+import styles from './TripCreate.module.css';
 
 function TripCreateFab({ onAddTrip }) {
   const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ function TripCreateFab({ onAddTrip }) {
 
   return (
     <>
-      <button type="button" className="tripFab" onClick={() => setOpen(true)} aria-label="Add trip">
+      <button type="button" className={styles.tripFab} onClick={() => setOpen(true)} aria-label="Add trip">
         +
       </button>
 
