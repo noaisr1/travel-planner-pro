@@ -3,13 +3,14 @@ import TripCreateModal from './TripCreateModal';
 import TripWizard from './TripWizard';
 import styles from './TripCreate.module.css';
 
-function TripCreateFab({ onAddTrip }) {
+// The "+" button that opens a modal with the create-trip wizard.
+export default function AddTripButton({ onAddTrip }) {
   const [open, setOpen] = useState(false);
 
-  const handleSubmit = (payload) => {
+  function handleSubmit(payload) {
     onAddTrip(payload);
     setOpen(false);
-  };
+  }
 
   return (
     <>
@@ -23,6 +24,3 @@ function TripCreateFab({ onAddTrip }) {
     </>
   );
 }
-
-export default TripCreateFab;
-

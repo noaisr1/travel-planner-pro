@@ -1,7 +1,8 @@
 import styles from '../TripCreate.module.css';
-import { useWizard } from './WizardContext';
+import { useWizard } from './useWizard';
 
-export default function Step2Budget() {
+// Wizard step 2: budget/price input and trip title.
+export default function BudgetStep() {
   const { formData, updateFields, step1Valid, priceNumber } = useWizard();
 
   const showTitleField = priceNumber !== null && priceNumber >= 0;
@@ -53,4 +54,3 @@ export default function Step2Budget() {
     </div>
   );
 }
-

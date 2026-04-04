@@ -1,12 +1,10 @@
+import { isNonEmptyString } from '../../utils/validation';
 import DateRangePickerField from '../DateRangePickerField';
 import styles from '../TripCreate.module.css';
-import { useWizard } from './WizardContext';
+import { useWizard } from './useWizard';
 
-function isNonEmptyString(value) {
-  return typeof value === 'string' && value.trim().length > 0;
-}
-
-export default function Step1Basics() {
+// Wizard step 1: destination input and date range picker.
+export default function DestinationStep() {
   const { formData, updateFields, step1Valid } = useWizard();
 
   return (
@@ -41,4 +39,3 @@ export default function Step1Basics() {
     </div>
   );
 }
-

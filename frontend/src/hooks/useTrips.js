@@ -6,11 +6,16 @@ const tripsKey = ['trips'];
 export function useTrips() {
   const queryClient = useQueryClient();
 
+  // useQuery fetches trips from the API and caches the result.
+  // React Query automatically re-renders components when the data changes.
   const tripsQuery = useQuery({
     queryKey: tripsKey,
     queryFn: listTrips,
   });
 
+  // Each mutation sends a write request to the API.
+  // invalidateQueries tells React Query the cached trips are stale,
+  // which triggers a refetch so the UI stays in sync with the server.
   const createTripMutation = useMutation({
     mutationFn: createTrip,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: tripsKey }),

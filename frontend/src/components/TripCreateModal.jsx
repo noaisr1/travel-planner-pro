@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import styles from './TripCreate.module.css';
 
+// Reusable modal dialog (overlay + centered panel). Wraps Radix UI Dialog.
 function TripCreateModal({ open, onOpenChange, title, children }) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>

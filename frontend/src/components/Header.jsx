@@ -1,5 +1,6 @@
 import styles from './Header.module.css';
 
+// Top bar: app title and total budget across all trips.
 function Header({ totalBudget }) {
   return (
     <header className={styles.header}>

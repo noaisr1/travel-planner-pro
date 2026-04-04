@@ -15,6 +15,7 @@ function toIsoDate(date) {
   return `${y}-${m}-${d}`;
 }
 
+// A button that opens a calendar popover for picking a start-to-end date range.
 function DateRangePickerField({ label, value, onChange, disabled = false }) {
   const [open, setOpen] = useState(false);
 

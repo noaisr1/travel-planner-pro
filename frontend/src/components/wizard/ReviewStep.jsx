@@ -1,7 +1,8 @@
 import styles from '../TripCreate.module.css';
-import { useWizard } from './WizardContext';
+import { useWizard } from './useWizard';
 
-export default function Step3Review() {
+// Wizard step 3: read-only summary of all fields before the user confirms.
+export default function ReviewStep() {
   const { formData, priceNumber, step1Valid, step2Valid } = useWizard();
 
   return (
@@ -37,4 +38,3 @@ export default function Step3Review() {
     </div>
   );
 }
-

@@ -1,27 +1,25 @@
-import { useMemo } from 'react';
+// Root component: loads trips, wires mutations, and renders the timeline of trip cards.
 import Header from './components/Header';
 import TripCard from './components/TripCard';
-import TripCreateFab from './components/TripCreateFab';
+import AddTripButton from './components/AddTripButton';
 import { useTrips } from './hooks/useTrips';
 import styles from './App.module.css';
 
 function App() {
   const { tripsQuery, createTripMutation, updateTripMutation, deleteTripMutation, addEventMutation } = useTrips();
 
-  const sortedTrips = useMemo(() => {
-    const trips = tripsQuery.data || [];
-    return [...trips].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-  }, [tripsQuery.data]);
+  const trips = tripsQuery.data || [];
+  const sortedTrips = [...trips].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
 
-  const handleAddTrip = (newTrip) => {
+  function handleAddTrip(newTrip) {
     createTripMutation.mutate(newTrip);
-  };
+  }
 
-  const handleDeleteTrip = (id) => {
+  function handleDeleteTrip(id) {
     deleteTripMutation.mutate(id);
-  };
+  }
 
-  const handleUpdateTrip = (id, updatedData) => {
+  function handleUpdateTrip(id, updatedData) {
     const payload = {
       title: updatedData.title,
       destination: updatedData.destination,
@@ -30,9 +28,9 @@ function App() {
       price: updatedData.price,
     };
     updateTripMutation.mutate({ id, payload });
-  };
+  }
 
-  const handleAddEvent = (tripId, newEvent) => {
+  function handleAddEvent(tripId, newEvent) {
     const payload = {
       activityName: newEvent.activityName,
       itemTime: newEvent.itemTime,
@@ -40,14 +38,14 @@ function App() {
       itemPrice: typeof newEvent.itemPrice === 'number' ? newEvent.itemPrice : 0,
     };
     addEventMutation.mutate({ tripId, payload });
-  };
+  }
 
   const totalBudget = sortedTrips.reduce((sum, trip) => sum + (trip.price || 0), 0);
 
   return (
     <div className={styles.App}>
       <Header totalBudget={totalBudget} />
-      <TripCreateFab onAddTrip={handleAddTrip} />
+      <AddTripButton onAddTrip={handleAddTrip} />
 
       <div className={styles.timelineContainer}>
         {sortedTrips.map((trip, index) => (
