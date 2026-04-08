@@ -1,15 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { addTripEvent, createTrip, deleteTrip, listTrips, updateTrip } from '../api/tripsApi';
 
-const tripsKey = ['trips'];
+export const TRIPS_QUERY_KEY = ['trips'];
 
 export function useTrips() {
   const queryClient = useQueryClient();
 
-  // useQuery fetches trips from the API and caches the result.
-  // React Query automatically re-renders components when the data changes.
-  const tripsQuery = useQuery({
-    queryKey: tripsKey,
+  // useSuspenseQuery loads trips before render; Suspense shows a fallback until ready.
+  const tripsQuery = useSuspenseQuery({
+    queryKey: TRIPS_QUERY_KEY,
     queryFn: listTrips,
   });
 
@@ -18,22 +17,22 @@ export function useTrips() {
   // which triggers a refetch so the UI stays in sync with the server.
   const createTripMutation = useMutation({
     mutationFn: createTrip,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: tripsKey }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: TRIPS_QUERY_KEY }),
   });
 
   const updateTripMutation = useMutation({
     mutationFn: ({ id, payload }) => updateTrip(id, payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: tripsKey }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: TRIPS_QUERY_KEY }),
   });
 
   const deleteTripMutation = useMutation({
     mutationFn: deleteTrip,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: tripsKey }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: TRIPS_QUERY_KEY }),
   });
 
   const addEventMutation = useMutation({
     mutationFn: ({ tripId, payload }) => addTripEvent(tripId, payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: tripsKey }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: TRIPS_QUERY_KEY }),
   });
 
   return {
